@@ -96,11 +96,6 @@
 #error DO NOT use defines before including third party header files.
 #endif
 
-#if (defined(true) || defined(false))
-#error One or more of the following is defined: true, false. They are keywords in C++ of type bool. Defining them as 1 and 0, may result in subtle compilation problems. 
-#error DO NOT use defines before including third party header files.
-#endif
-
 #ifndef __ASSERT_H__
 #define __ASSERT_H__
 #include <assert.h>
