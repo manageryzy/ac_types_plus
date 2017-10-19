@@ -2303,8 +2303,9 @@ public:
   // Bit and Slice Select -----------------------------------------------------
   template<int WS, int WX, bool SX>
   inline ac_int<WS,S> slc(const ac_int<WX,SX> &index) const {
+    using ac_intX = ac_int<WX,SX>;
     ac_int<WS,S> r;
-    AC_ASSERT(index >= 0, "Attempting to read slc with negative indeces");
+    AC_ASSERT(index >= ac_intX(0), "Attempting to read slc with negative indeces");
     ac_int<WX-SX, false> uindex = index;
     Base::shift_r(uindex.to_uint(), r);
     r.bit_adjust();
