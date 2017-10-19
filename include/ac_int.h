@@ -2639,7 +2639,13 @@ template<> inline ac_int<64,false>::ac_int( Ulong b ) { v[0] = (int) b; v[1] = (
 template<int W, bool S>
 inline std::ostream& operator << (std::ostream &os, const ac_int<W,S> &x) {
 #ifndef __SYNTHESIS__
-  os << x.to_string(AC_DEC);
+  if ((os.flags() & std::ios::hex) != 0) {
+    os << x.to_string(AC_HEX);
+  } else if ((os.flags() & std::ios::oct) != 0) {
+    os << x.to_string(AC_OCT);
+  } else {
+    os << x.to_string(AC_DEC);
+  }
 #endif
   return os;
 }
