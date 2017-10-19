@@ -1304,7 +1304,14 @@ namespace ac_private {
   template<int N>
   class iv {
   protected:
+#ifdef __SYNTHESIS__
     int v[N];
+#else // __SYNTHESIS__
+    // Fully initialize the underlying int vector for non-synthesis builds.
+    // Otherwise, LLVM may take advantage of the uninitialized values during
+    // optimization and will occasionally produce garbage.
+    int v[N] = {};
+#endif  // __SYNTHESIS__
   public:
     template<int N2> friend class iv;
     iv() {}
