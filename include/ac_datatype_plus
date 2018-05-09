@@ -1,7 +1,20 @@
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wint-in-bool-context"
+#pragma GCC diagnostic ignored "-Wparentheses"
+#pragma GCC diagnostic ignored "-Wsign-compare"
+#pragma GCC diagnostic ignored "-Wshift-count-overflow"
+#pragma GCC diagnostic ignored "-Wreturn-local-addr"
+
 #include "ac_int.h"
 #include "ac_fixed.h"
 #include "ac_float.h"
 #include "ac_complex.h"
 #include "ac_channel.h"
 
+#include "ac_slice.hpp"
+#include "ac_string.hpp"
+
 #include "ac_data_plus.hpp"
+
+#pragma GCC diagnostic pop

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.template": "c",
+        "*.h": "cpp",
+        "ostream": "cpp"
+    }
+}

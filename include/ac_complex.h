@@ -77,6 +77,7 @@ class ac_complex {
 public:   // temporary workaround
   T _r;
   T _i;
+  static const int width = T::width;
   typedef typename ac_private::map<T>::t map_T;
   typedef typename map_T::rt_unary::mag_sqr T_sqr;
   typedef typename ac_private::map<T_sqr>::t map_T_sqr; 

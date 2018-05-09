@@ -11,19 +11,19 @@
  *  Copyright 2013-2016, Mentor Graphics Corporation,                     *
  *                                                                        *
  *  All Rights Reserved.                                                  *
- *  
+ *
  **************************************************************************
  *  Licensed under the Apache License, Version 2.0 (the "License");       *
- *  you may not use this file except in compliance with the License.      * 
+ *  you may not use this file except in compliance with the License.      *
  *  You may obtain a copy of the License at                               *
  *                                                                        *
  *      http://www.apache.org/licenses/LICENSE-2.0                        *
  *                                                                        *
- *  Unless required by applicable law or agreed to in writing, software   * 
- *  distributed under the License is distributed on an "AS IS" BASIS,     * 
+ *  Unless required by applicable law or agreed to in writing, software   *
+ *  distributed under the License is distributed on an "AS IS" BASIS,     *
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or       *
- *  implied.                                                              * 
- *  See the License for the specific language governing permissions and   * 
+ *  implied.                                                              *
+ *  See the License for the specific language governing permissions and   *
  *  limitations under the License.                                        *
  **************************************************************************
  *                                                                        *
@@ -32,7 +32,7 @@
  *************************************************************************/
 
 //  Source:         ac_float.h
-//  Description:    class for floating point operation handling in C++ 
+//  Description:    class for floating point operation handling in C++
 //  Author:         Andres Takach, Ph.D.
 
 #ifndef __AC_FLOAT_H
@@ -65,7 +65,7 @@
 
 // for safety
 #if (defined(E) || defined(WF) || defined(IF) || defined(SF))
-#error One or more of the following is defined: E, WF, IF, SF. Definition conflicts with their usage as template parameters. 
+#error One or more of the following is defined: E, WF, IF, SF. Definition conflicts with their usage as template parameters.
 #error DO NOT use defines before including third party header files.
 #endif
 
@@ -115,7 +115,7 @@ template< AC_FL_T() >
 class ac_float {
   enum { NO_UN = true, S = true, S2 = true, SR = true };
 public:
-  typedef ac_fixed<W,I,S> mant_t; 
+  typedef ac_fixed<W,I,S> mant_t;
   typedef ac_int<E,true> exp_t;
   mant_t m;
   exp_t e;
@@ -126,7 +126,7 @@ public:
 private:
   inline bool is_neg() const { return m < 0; }   // is_neg would be more efficient
 
-  enum {NZ_E = !!E, MIN_EXP = -NZ_E << (E-NZ_E), MAX_EXP = (1 << (E-NZ_E))-1};
+  enum {NZ_E = !!E, MIN_EXP = (unsigned int)(-NZ_E) << (E-NZ_E), MAX_EXP = (1 << (E-NZ_E))-1};
 
 public:
   static const int width = W;
@@ -139,7 +139,7 @@ public:
   template< AC_FL_T0(2) >
   struct rt {
     enum {
-      // need to validate 
+      // need to validate
       F=W-I,
       F2=W2-I2,
       mult_w = W+W2,
@@ -179,7 +179,7 @@ public:
       lshift_i = I,
       lshift_s = S,
       lshift_e_0 = exp_t::template rt<WI,SI>::plus::width,
-      lshift_e = AC_MIN(lshift_e_0, 24), 
+      lshift_e = AC_MIN(lshift_e_0, 24),
       rshift_w = W,
       rshift_i = I,
       rshift_s = S,
@@ -188,7 +188,7 @@ public:
     };
     typedef ac_float<lshift_w, lshift_i, lshift_e> lshift;
     typedef ac_float<rshift_w, rshift_i, rshift_e> rshift;
-  }; 
+  };
 
   template<typename T>
   struct rt_T {
@@ -299,7 +299,7 @@ public:
     if(E) {
       if(!m)
         e = 0;
-      else { 
+      else {
         e = e2;
         if(normalize)
           m.normalize(e);
@@ -310,13 +310,13 @@ public:
   template<int WFX, int IFX, bool SFX, int E2>
   ac_float(const ac_fixed<WFX,IFX,SFX> &m2, const ac_int<E2,true> &e2, bool normalize=true) {
     enum { WF2 = WFX+!SFX, IF2 = IFX+!SFX };
-    ac_float<WF2,IF2,E2>  f(ac_fixed<WF2,IF2,true>(m2), e2, normalize); 
+    ac_float<WF2,IF2,E2>  f(ac_fixed<WF2,IF2,true>(m2), e2, normalize);
     *this = f;
   }
 
   template<int WFX, int IFX, bool SFX, ac_q_mode QFX, ac_o_mode OFX>
   ac_float(const ac_fixed<WFX,IFX,SFX,QFX,OFX> &op, bool normalize=true) {
-   enum { 
+   enum {
       U2S = !SFX,
       WT2 = WFX+U2S, IT2 = IFX+U2S,
       RND = QFX!=AC_TRN & QFX!=AC_TRN_ZERO & WT2 > W,
@@ -328,12 +328,12 @@ public:
       ET = ac::template nbits<WC_EXP_T>::val + 1
     };
     ac_float<WT2,IT2,ET>  f(op, ac_int<ET,true>(0), normalize);
-    *this = f; 
+    *this = f;
   }
 
   template<int WI, bool SI>
   ac_float(const ac_int<WI,SI> &op) {
-    *this = ac_fixed<WI,WI,SI>(op); 
+    *this = ac_fixed<WI,WI,SI>(op);
   }
 
   inline ac_float( bool b ) { *this = (ac_int<1,false>) b; }
@@ -352,11 +352,11 @@ public:
   // Explicit conversion functions to ac_int and ac_fixed
   inline typename rt_unary::to_ac_fixed_t to_ac_fixed() const {
     typename rt_unary::to_ac_fixed_t r = m;
-    r <<= e; 
+    r <<= e;
     return r;
   }
   inline typename rt_unary::to_ac_int_t to_ac_int() const {
-    return to_ac_fixed().to_ac_int(); 
+    return to_ac_fixed().to_ac_int();
   }
 
   // Explicit conversion functions to C built-in types -------------
@@ -387,7 +387,7 @@ public:
     } else {
       ac_int<E,false> offset = 0;
       offset[E-1] = 1;
-      ac_int<ET+1,true> e_s = new_e + offset; 
+      ac_int<ET+1,true> e_s = new_e + offset;
       if(e_s < 0) {
         m >>= (MIN_EXP - new_e);   // can a full barrel-shifter be avoided ???
         e = MIN_EXP;
@@ -433,7 +433,7 @@ public:
   template<AC_FL_T(2)>
   bool compare(const AC_FL(2) &op2, bool *gt) const {
     typedef ac_fixed<W2,I,S2> fx2_t;
-    typedef typename ac_fixed<W,I,S>::template rt_T< fx2_t >::logic fx_t; 
+    typedef typename ac_fixed<W,I,S>::template rt_T< fx2_t >::logic fx_t;
     typedef ac_fixed<fx_t::width,fx_t::i_width,false> fxu_t;
 
     fx2_t op2_m_0;
@@ -441,16 +441,16 @@ public:
 
     fx_t op1_m = m;
     fx_t op2_m = op2_m_0;
-    int e_dif = exp() - op2.exp() + I - I2; 
+    int e_dif = exp() - op2.exp() + I - I2;
     bool op2_m_neg = op2_m[fx_t::width-1];
     fx_t out_bits = op2_m ^ ((op2_m_neg & e_dif < 0) ? ~fx_t(0) : fx_t(0));
     out_bits &= ~(fxu_t(~fxu_t(0)) << e_dif);
     op2_m >>= e_dif;
-    bool overflow = e_dif < 0 & !!out_bits | op2_m_neg ^ op2_m[fx_t::width-1]; 
+    bool overflow = e_dif < 0 & !!out_bits | op2_m_neg ^ op2_m[fx_t::width-1];
 
     *gt = overflow & op2_m_neg | !overflow & op1_m > op2_m;
     bool eq = op1_m == op2_m & !overflow & !out_bits;
-    return eq; 
+    return eq;
   }
 
 
@@ -460,22 +460,22 @@ public:
     enum { IT = AC_MAX(I,I2) };
     typedef ac_fixed<W, IT, S> fx1_t;
     typedef ac_fixed<W2, IT, S2> fx2_t;
-    typedef typename fx1_t::template rt_T< ac_fixed<WR,IT,SR> >::logic fx1t_t; 
-    typedef typename fx2_t::template rt_T< ac_fixed<WR,IT,SR> >::logic fx2t_t; 
-    typedef typename fx1t_t::template rt_T<fx2t_t>::plus mt_t; 
+    typedef typename fx1_t::template rt_T< ac_fixed<WR,IT,SR> >::logic fx1t_t;
+    typedef typename fx2_t::template rt_T< ac_fixed<WR,IT,SR> >::logic fx2t_t;
+    typedef typename fx1t_t::template rt_T<fx2t_t>::plus mt_t;
     typedef ac_fixed<mt_t::width+1,mt_t::i_width,SR> t1_t;
     typedef ac_fixed<mt_t::width+2,mt_t::i_width,SR> t2_t;
     typedef ac_fixed<t2_t::width,IR,SR> r1_t;
 
-    enum { MAX_EXP2 = AC_FL(2)::MAX_EXP, MIN_EXP2 = AC_FL(2)::MIN_EXP, 
+    enum { MAX_EXP2 = AC_FL(2)::MAX_EXP, MIN_EXP2 = AC_FL(2)::MIN_EXP,
           I_DIFF = mt_t::i_width - IR,
-          MAX_EXP_T = AC_MAX(MAX_EXP, MAX_EXP2) + I_DIFF, 
+          MAX_EXP_T = AC_MAX(MAX_EXP, MAX_EXP2) + I_DIFF,
           MIN_EXP_T = AC_MIN(MIN_EXP, MIN_EXP2) + I_DIFF,
           MAX_EXP_T_P = MAX_EXP_T < 0 ? ~ MAX_EXP_T : MAX_EXP_T,
           MIN_EXP_T_P = MIN_EXP_T < 0 ? ~ MIN_EXP_T : MIN_EXP_T,
           WC_EXP_T = AC_MAX(MAX_EXP_T_P, MIN_EXP_T_P),
           ET = ac::template nbits<WC_EXP_T>::val + 1 };
- 
+
     ac_fixed<mt_t::width, I+1, mt_t::sign> op1_m_0 = m;
     mt_t op1_m = 0;
     op1_m.set_slc(0, op1_m_0.template slc<mt_t::width>(0));
@@ -500,24 +500,24 @@ public:
     bool sticky_bit = !!sticky_bits;
     bool msb_shifted_out = (bool) t1_t(op_sl).template slc<1>(e_dif);
     op_sl >>= e_dif;
-    op1_m = e1_lt_e2 ? op_sl : op1_m; 
-    op2_m = e1_lt_e2 ? op2_m : op_sl; 
+    op1_m = e1_lt_e2 ? op_sl : op1_m;
+    op2_m = e1_lt_e2 ? op2_m : op_sl;
 
     t1_t t1 = op1_m;
     t1 += op2_m;
     t1[0] = msb_shifted_out;
 
-    bool shift_r_1 = false; //t1[t1_t::width-1] != t1[t1_t::width-2]; 
+    bool shift_r_1 = false; //t1[t1_t::width-1] != t1[t1_t::width-2];
     sticky_bit |= shift_r_1 & t1[0];
     t1 >>= shift_r_1;
     t2_t t2 = t1;
     t2[0] = sticky_bit;
     r1_t r1;
     r1.set_slc(0, t2.template slc<t2_t::width>(0));
-    r_type r_t; 
+    r_type r_t;
     r_t.m = (ac_fixed<WR,IR,SR,QR>) r1; // t2;  This could overflow if !SR&ST
     ac_int<ET,true> r_e = op1_zero ? op2_e : (op2_zero ? op1_e : AC_MAX(op1_e, op2_e));
-    r_e = ac_int<1,true>(!op1_zero | !op2_zero) & (r_e + shift_r_1 + I_DIFF); 
+    r_e = ac_int<1,true>(!op1_zero | !op2_zero) & (r_e + shift_r_1 + I_DIFF);
     r_t.adjust(r_e, true, false);
     r.m = r_t.m;
     r.e = r_t.e;
@@ -528,74 +528,74 @@ public:
     op1.plus_minus(op2, *this);
     return *this;
   }
- 
+
   template<AC_FL_T(1), AC_FL_T(2)>
   ac_float sub(const AC_FL(1) &op1, const AC_FL(2) &op2) {
     op1.plus_minus(op2, *this, true);
     return *this;
   }
 
-  typename rt_unary::neg abs() const {   
-    typedef typename rt_unary::neg r_t; 
+  typename rt_unary::neg abs() const {
+    typedef typename rt_unary::neg r_t;
     r_t r;
     r.m = is_neg() ? -m : r_t::mant_t(m);
     r.e = e;
     return r;
   }
- 
+
 #ifdef __AC_FLOAT_ENABLE_ALPHA
   // These will be changed!!! For now only enable to explore integration with ac_complex
   template<AC_FL_T(2)>
   typename rt< AC_FL_TV0(2) >::plus operator +(const AC_FL(2) &op2) const {
     typename rt< AC_FL_TV0(2) >::plus r;
-    plus_minus(op2, r); 
+    plus_minus(op2, r);
     return r;
   }
   template<AC_FL_T(2)>
   typename rt< AC_FL_TV0(2) >::minus operator -(const AC_FL(2) &op2) const {
     typename rt< AC_FL_TV0(2) >::minus r;
-    plus_minus(op2, r, true); 
+    plus_minus(op2, r, true);
     return r;
-  } 
+  }
 #endif
 
   template<AC_FL_T(2)>
   typename rt< AC_FL_TV0(2) >::div operator /(const AC_FL(2) &op2) const {
     typename rt< AC_FL_TV0(2) >::div r(m/op2.m, exp()-op2.exp());
     return r;
-  } 
+  }
   template<AC_FL_T(2)>
   ac_float operator +=(const AC_FL(2) &op2) {
     ac_float r;
     plus_minus(op2, r);
-    *this = r; 
-  } 
+    *this = r;
+  }
   template<AC_FL_T(2)>
   ac_float operator -=(const AC_FL(2) &op2) {
     ac_float r;
     plus_minus(op2, r, true);
-    *this = r; 
-  } 
+    *this = r;
+  }
   template<AC_FL_T(2)>
   ac_float operator *=(const AC_FL(2) &op2) {
     *this = *this * op2;
-  } 
+  }
   template<AC_FL_T(2)>
   ac_float operator /=(const AC_FL(2) &op2) {
     *this = *this / op2;
-  } 
+  }
   ac_float operator + () const {
     return *this;
-  } 
+  }
   typename rt_unary::neg operator - () const {
     typename rt_unary::neg r;
-    r.m = -m; 
+    r.m = -m;
     r.e = e;
-    return r; 
-  } 
+    return r;
+  }
   bool operator ! () const {
     return !m;
-  } 
+  }
 
   // Shift --------------------------------------------------------------------
   template<int WI, bool SI>
@@ -628,41 +628,41 @@ public:
   bool operator == (const AC_FL(2) &f) const {
     bool gt;
     return compare(f, &gt);
-  } 
+  }
   template<AC_FL_T(2)>
   bool operator != (const AC_FL(2) &f) const {
-    return !operator == (f); 
-  } 
+    return !operator == (f);
+  }
   template<AC_FL_T(2)>
   bool operator < (const AC_FL(2) &f) const {
     bool gt;
     bool eq = compare(f, &gt);
-    return !(eq | gt); 
-  } 
+    return !(eq | gt);
+  }
   template<AC_FL_T(2)>
   bool operator >= (const AC_FL(2) &f) const {
     return !operator < (f);
-  } 
+  }
   template<AC_FL_T(2)>
   bool operator > (const AC_FL(2) &f) const {
     bool gt;
     compare(f, &gt);
-    return gt; 
-  } 
+    return gt;
+  }
   template<AC_FL_T(2)>
   bool operator <= (const AC_FL(2) &f) const {
     return !operator > (f);
-  } 
+  }
 
   inline std::string to_string(ac_base_mode base_rep, bool sign_mag = false, bool hw=true) const {
     // TODO: printing decimal with exponent
     if(!hw) {
       ac_fixed<W,0,S> mantissa;
-      mantissa.set_slc(0, m.template slc<W>(0)); 
+      mantissa.set_slc(0, m.template slc<W>(0));
       std::string r = mantissa.to_string(base_rep, sign_mag);
       r += "e2";
       r += (e + I).to_string(base_rep, sign_mag | base_rep == AC_DEC);
-      return r; 
+      return r;
     } else {
       std::string r = m.to_string(base_rep, sign_mag);
       if(base_rep != AC_DEC)
@@ -674,7 +674,7 @@ public:
         r += e.to_string(base_rep, sign_mag | base_rep == AC_DEC);
       else
         r += "0";
-      return r; 
+      return r;
     }
   }
 
@@ -712,10 +712,10 @@ namespace ac_private {
     if(!nan) {
       T d = x - x;
       inf = !(d==d);
-    } 
+    }
     return nan;
   }
- 
+
   inline ac_float_cdouble_t double_to_ac_float(double d) {
     typedef ac_float_cdouble_t r_t;
 #ifndef __SYNTHESIS__
@@ -728,7 +728,7 @@ namespace ac_private {
 #endif
     r_t::exp_t exp;
     r_t::mant_t mant = ac::frexp_d(d, exp);
-    return r_t(mant, exp, false);   
+    return r_t(mant, exp, false);
   }
 
   inline ac_float_cfloat_t float_to_ac_float(float f) {
@@ -743,7 +743,7 @@ namespace ac_private {
 #endif
     r_t::exp_t exp;
     r_t::mant_t mant = ac::frexp_f(f, exp);
-    return r_t(mant, exp, false);   
+    return r_t(mant, exp, false);
   }
 };
 
@@ -751,7 +751,7 @@ namespace ac {
   template<typename T>
   struct ac_float_represent {
     typedef typename ac_fixed_represent<T>::type fx_t;
-    typedef ac_float<fx_t::width+!fx_t::sign,fx_t::i_width+!fx_t::sign,1,fx_t::q_mode> type; 
+    typedef ac_float<fx_t::width+!fx_t::sign,fx_t::i_width+!fx_t::sign,1,fx_t::q_mode> type;
   };
   template<> struct ac_float_represent<float> {
     typedef ac_private::ac_float_cfloat_t type;
@@ -918,7 +918,7 @@ inline std::ostream& operator << (std::ostream &os, const AC_FL() &x) {
   FL_OPS_WITH_CTYPE(C_TYPE) \
   FL_SHIFT_OPS_WITH_INT_CTYPE(C_TYPE)
 
-// --------------------------------------- End of Macros for Binary Operators with C Floats 
+// --------------------------------------- End of Macros for Binary Operators with C Floats
 
     // Binary Operators with C Floats --------------------------------------------
     FL_OPS_WITH_CTYPE(float)
@@ -935,7 +935,7 @@ inline std::ostream& operator << (std::ostream &os, const AC_FL() &x) {
     FL_OPS_WITH_INT_CTYPE(unsigned long)
     FL_OPS_WITH_INT_CTYPE(Slong)
     FL_OPS_WITH_INT_CTYPE(Ulong)
-    // -------------------------------------- End of Binary Operators with C Floats 
+    // -------------------------------------- End of Binary Operators with C Floats
 
 // Macros for Binary Operators with ac_int --------------------------------------------
 
@@ -974,7 +974,7 @@ inline std::ostream& operator << (std::ostream &os, const AC_FL() &x) {
   inline AC_FL() &operator ASSIGN_OP ( AC_FL() &op, const ac_int<WI,SI> &op2) {  \
     typedef typename ac::template ac_float_represent< ac_int<WI,SI> >::type fl2_t; \
     return op.operator ASSIGN_OP (fl2_t(op2));  \
-  }  
+  }
 
 // -------------------------------------------- End of Macros for Binary Operators with ac_int
 
@@ -996,7 +996,7 @@ inline std::ostream& operator << (std::ostream &os, const AC_FL() &x) {
     FL_ASSIGN_OP_WITH_AC_INT(*=)
     FL_ASSIGN_OP_WITH_AC_INT(/=)
     FL_ASSIGN_OP_WITH_AC_INT(%=)
-    // -------------------------------------- End of Binary Operators with ac_int 
+    // -------------------------------------- End of Binary Operators with ac_int
 
 // Macros for Binary Operators with ac_fixed --------------------------------------------
 
@@ -1056,7 +1056,7 @@ inline std::ostream& operator << (std::ostream &os, const AC_FL() &x) {
     FL_ASSIGN_OP_WITH_AC_FIXED(-=)
     FL_ASSIGN_OP_WITH_AC_FIXED(*=)
     FL_ASSIGN_OP_WITH_AC_FIXED(/=)
-    // -------------------------------------- End of Binary Operators with ac_fixed 
+    // -------------------------------------- End of Binary Operators with ac_fixed
 
 // Global templatized functions for easy initialization to special values
 template<ac_special_val V, AC_FL_T()>
@@ -1067,7 +1067,7 @@ inline AC_FL() value( AC_FL() ) {
 
 namespace ac {
 // function to initialize (or uninitialize) arrays
-  template<ac_special_val V, AC_FL_T() > 
+  template<ac_special_val V, AC_FL_T() >
   inline bool init_array( AC_FL() *a, int n) {
     AC_FL0() t = value<V>(*a);
     for(int i=0; i < n; i++)
@@ -1082,7 +1082,7 @@ namespace ac {
 #pragma warning( pop )
 #endif
 #if defined(__clang__)
-#pragma clang diagnostic pop 
+#pragma clang diagnostic pop
 #endif
 
 #ifdef __AC_NAMESPACE

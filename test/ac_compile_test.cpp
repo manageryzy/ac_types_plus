@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <ac_datatype_plus>
 
 using namespace std;
@@ -1062,6 +1063,12 @@ void test_defines()
 
 int main()
 {
+    ac_complex<ac_fixed<16, 2>> a = 0.5;
+    a.i() = 0.5;
+    auto t = ac_hex_string{ a };
+    cout << t << endl;
+    cout << static_cast<ac_int<32, false>>(t) << endl;
+
     test_defines();
 
     return 0;
