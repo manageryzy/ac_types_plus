@@ -1,10 +1,21 @@
+#pragma once
 
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wint-in-bool-context"
 #pragma GCC diagnostic ignored "-Wparentheses"
 #pragma GCC diagnostic ignored "-Wsign-compare"
 #pragma GCC diagnostic ignored "-Wshift-count-overflow"
 #pragma GCC diagnostic ignored "-Wreturn-local-addr"
+#endif
+
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable )
+#endif
+
+
+#include "ac_data_plus.hpp"
 
 #include "ac_int.h"
 #include "ac_fixed.h"
@@ -15,6 +26,10 @@
 #include "ac_slice.hpp"
 #include "ac_string.hpp"
 
-#include "ac_data_plus.hpp"
-
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
+#endif
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif

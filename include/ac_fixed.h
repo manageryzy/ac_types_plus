@@ -91,7 +91,7 @@ namespace ac_private {
 //enum ac_o_mode { AC_WRAP, AC_SAT, AC_SAT_ZERO, AC_SAT_SYM };
 
 template<int W, int I, bool S=true, ac_q_mode Q=AC_TRN, ac_o_mode O=AC_WRAP>
-class ac_fixed : private ac_private::iv<(W+31+!S)/32> 
+class ac_fixed : private ac_private::iv<(W+31+!S)/32> ,public ac_base_type
 #ifndef __SYNTHESIS__
 __AC_FIXED_UTILITY_BASE 
 #endif
@@ -99,6 +99,7 @@ __AC_FIXED_UTILITY_BASE
 #if defined(__SYNTHESIS__) && !defined(AC_IGNORE_BUILTINS)
 #pragma builtin
 #endif
+
 
   enum {N=(W+31+!S)/32};
 
@@ -179,6 +180,9 @@ public:
   static const ac_o_mode o_mode = O;
   static const ac_q_mode q_mode = Q;
   static const int e_width = 0;
+
+  struct is_ac_basic_type : std::true_type {};
+
 
   template<int W2, int I2, bool S2>
   struct rt {

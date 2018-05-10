@@ -59,9 +59,10 @@
 //////////////////////////////////////////
 
 template <class T>
-class  ac_channel
+class  ac_channel:public ac_base_type
 {
 public:
+    struct is_ac_basic_type : std::conditional_t<is_ac_type<T>::value, typename T::is_ac_basic_type, std::false_type> {};
 
 	T read();
 	void read(T& t) ;

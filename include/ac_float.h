@@ -112,7 +112,7 @@ namespace ac_private {
 //////////////////////////////////////////////////////////////////////////////
 
 template< AC_FL_T() >
-class ac_float {
+class ac_float:public ac_base_type {
   enum { NO_UN = true, S = true, S2 = true, SR = true };
 public:
   typedef ac_fixed<W,I,S> mant_t;
@@ -135,6 +135,8 @@ public:
   static const bool sign = S;
   static const ac_q_mode q_mode = Q;
   static const ac_o_mode o_mode = AC_SAT;
+
+  struct is_ac_basic_type : std::false_type {};
 
   template< AC_FL_T0(2) >
   struct rt {

@@ -1789,7 +1789,7 @@ template<int W2, int I2, bool S2, ac_q_mode Q2, ac_o_mode O2> class ac_fixed;
 //////////////////////////////////////////////////////////////////////////////
 
 template<int W, bool S=true>
-class ac_int : public ac_private::iv_conv<(W+31+!S)/32, S, W<=64> 
+class ac_int : public ac_private::iv_conv<(W+31+!S)/32, S, W<=64>,public ac_base_type 
 #ifndef __SYNTHESIS__
 __AC_INT_UTILITY_BASE 
 #endif
@@ -1845,6 +1845,8 @@ public:
   static const ac_q_mode q_mode = AC_TRN;
   static const ac_o_mode o_mode = AC_WRAP;
   static const int e_width = 0;
+
+  struct is_ac_basic_type : std::true_type {};
 
   template<int W2, bool S2>
   struct rt {

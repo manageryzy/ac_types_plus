@@ -73,7 +73,7 @@ namespace ac_private {
 }  // namespace ac_private
 
 template<typename T>
-class ac_complex {
+class ac_complex:public ac_base_type {
 public:   // temporary workaround
   T _r;
   T _i;
@@ -106,6 +106,8 @@ public:
       typedef ac_complex<typename map_T::rt_unary::template set<N>::sum> sum;
     };
   };
+
+  struct is_ac_basic_type : std::conditional_t<is_ac_type<T>::value, typename T::is_ac_basic_type,std::false_type> {};
 
   ac_complex() { }
   template<typename T2>
