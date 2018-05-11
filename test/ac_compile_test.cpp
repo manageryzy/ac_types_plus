@@ -1070,7 +1070,7 @@ int main()
     t = "0x01-02 03_04h";
     cout << hex <<static_cast<ac_int<32,false>>(t) << endl;
 
-    ac_bin_string t2 = "0110_0000b";
+    auto t2 = "0110_0000b"_bin;
     cout << t2 << endl <<ac_int<16, false>{t2} << endl;
 
     cout << is_ac_basic_type<uint16>::value << endl;
