@@ -23,6 +23,8 @@
 #include "ac_complex.h"
 #include "ac_channel.h"
 
+#include "ac_math.hpp"
+
 #include "ac_slice.hpp"
 #include "ac_string.hpp"
 

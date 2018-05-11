@@ -1,6 +1,8 @@
 #include <iostream>
 #include <sstream>
 #include <ac_datatype_plus>
+#include <range.hpp>
+#include <Eigen/Core>
 
 using namespace std;
 
@@ -1061,6 +1063,8 @@ void test_defines()
     TEST_DEFINE_AND_SET_COMPLEX(PACK(ac_float<63, 1, 8>), 0.5);
 }
 
+
+
 int main()
 {
     ac_complex<ac_fixed<16, 2>> a = 0.5;
@@ -1069,6 +1073,11 @@ int main()
     cout << t << endl;
     t = "0x01-02 03_04h";
     cout << hex <<static_cast<ac_int<32,false>>(t) << endl;
+
+    typedef Eigen::Matrix<ac_fixed<16, 1>, 4, 4> Matrix_f16;
+    Matrix_f16 mat;
+    mat << 0.1, 0.2, 0.3, 0.4 , 0.1, 0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0.4;
+    cout << mat << endl << mat * mat << endl;
 
     auto t2 = "0110_0000b"_bin;
     cout << t2 << endl <<ac_int<16, false>{t2} << endl;

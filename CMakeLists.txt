@@ -42,8 +42,7 @@ endif()
 
 set_property(GLOBAL PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
-include_directories(include)
-include_directories(cppitertools)
+include_directories("include" "cppitertools" "eigen")
 
 if(${TEST_EIGEN})
     add_subdirectory(eigen)
