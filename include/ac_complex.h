@@ -77,7 +77,7 @@ class ac_complex:public ac_base_type {
 public:   // temporary workaround
   T _r;
   T _i;
-  static const int width = T::width;
+  static const int width = T::width * 2;
   typedef typename ac_private::map<T>::t map_T;
   typedef typename map_T::rt_unary::mag_sqr T_sqr;
   typedef typename ac_private::map<T_sqr>::t map_T_sqr; 
