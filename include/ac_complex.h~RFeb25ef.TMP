@@ -260,25 +260,24 @@ public:
       return r;
   }
 
-    //TODO:
-  // template<int W2, bool S2, int WX, bool SX>
-  // inline ac_complex<T> &set_slc(const ac_int<WX, SX> lsb, const ac_int<W2, S2> &slc) {
-  //     AC_ASSERT(lsb.to_int() + W2 <= W && lsb.to_int() >= 0, "Out of bounds set_slc");
-  //
-  //     return *this;
-  // }
-  // template<int W2, bool S2>
-  // inline ac_complex<T> &set_slc(signed lsb, const ac_int<W2, S2> &slc) {
-  //     AC_ASSERT(lsb + W2 <= W && lsb >= 0, "Out of bounds set_slc");
-  //
-  //     return *this;
-  // }
-  // template<int W2, bool S2>
-  // inline ac_complex<T> &set_slc(unsigned ulsb, const ac_int<W2, S2> &slc) {
-  //     AC_ASSERT(ulsb + W2 <= W, "Out of bounds set_slc");
-  //
-  //     return *this;
-  // }
+  template<int W2, bool S2, int WX, bool SX>
+  inline ac_complex<T> &set_slc(const ac_int<WX, SX> lsb, const ac_int<W2, S2> &slc) {
+      AC_ASSERT(lsb.to_int() + W2 <= W && lsb.to_int() >= 0, "Out of bounds set_slc");
+
+      return *this;
+  }
+  template<int W2, bool S2>
+  inline ac_complex<T> &set_slc(signed lsb, const ac_int<W2, S2> &slc) {
+      AC_ASSERT(lsb + W2 <= W && lsb >= 0, "Out of bounds set_slc");
+
+      return *this;
+  }
+  template<int W2, bool S2>
+  inline ac_complex<T> &set_slc(unsigned ulsb, const ac_int<W2, S2> &slc) {
+      AC_ASSERT(ulsb + W2 <= W, "Out of bounds set_slc");
+
+      return *this;
+  }
 
 };
 
