@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_traits>
+
 class ac_base_type
 {
 }; // base class for ac_int ac_fixed ac_channel ac_complex ac_float
