@@ -26,19 +26,21 @@ matrix:
       env:
         - CTEST_TARGET_SYSTEM=Linux-gcc    CTEST_MODEL=Nightly
         - MATRIX_EVAL="CC=gcc-8 &&CXX=g++-8"
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-            sources:
-              - llvm-toolchain-trusty-6.0
-            packages:
-              - clang-6.0
-      env:
-        - CTEST_TARGET_SYSTEM=Linux-clang  CTEST_MODEL=Nightly
-        - MATRIX_EVAL="CC=clang-6.0 &&CXX=clang++-6.0"
+    # - os: linux
+    #   compiler: clang
+    #   addons:
+    #     apt:
+    #         sources:
+    #           - llvm-toolchain-trusty-6.0
+    #         packages:
+    #           - clang-6.0
+    #   env:
+    #     - CTEST_TARGET_SYSTEM=Linux-clang  CTEST_MODEL=Nightly
+    #     - MATRIX_EVAL="CC=clang-6.0 &&CXX=clang++-6.0"
 before_install:
   - eval "${MATRIX_EVAL}"
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -q
 script:
   - echo $CC
   - mkdir build && cd build && cmake .. && make -j && ctest
