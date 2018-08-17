@@ -25,18 +25,18 @@ matrix:
             - g++-8
       env:
         - CTEST_TARGET_SYSTEM=Linux-gcc    CTEST_MODEL=Nightly
-        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+        - MATRIX_EVAL="export CC=gcc-8 && export CXX=g++-8"
     - os: linux
       compiler: clang
       addons:
         apt:
             sources:
-              - ubuntu-toolchain-r-test
+              - llvm-toolchain-trusty-6.0
             packages:
               - clang-6
       env:
         - CTEST_TARGET_SYSTEM=Linux-clang  CTEST_MODEL=Nightly
-        -  MATRIX_EVAL="CC=clang-6 && CXX=clang++-6"
+        - MATRIX_EVAL="export CC=clang-6 && export CXX=clang++-6"
 
 script:
   - mkdir build && cd build && cmake .. && make -j && ctest
