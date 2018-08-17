@@ -37,7 +37,8 @@ matrix:
       env:
         - CTEST_TARGET_SYSTEM=Linux-clang  CTEST_MODEL=Nightly
         - MATRIX_EVAL="CC=clang-6.0 &&CXX=clang++-6.0"
-
+before_install:
+  - eval "${MATRIX_EVAL}"
 script:
   - echo $CC
   - mkdir build && cd build && cmake .. && make -j && ctest
