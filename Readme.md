@@ -1,13 +1,15 @@
 # AC DataTypes Plus #
 
+[![Build Status](https://travis-ci.org/manageryzy/ac_types_plus.svg?branch=master)](https://travis-ci.org/manageryzy/ac_types_plus)
+
 this repo is a fork of mentor's  Algorithmic C Datatype providing more feature and Eigen library compatibility.
 
 ## TODO : ##
 
-Everything!
+as you wish
 
 
-## changes ##
+## CHANGES : ##
 
 * add width to ac_datatype
 * ac_base_type become base class of ac_int,ac_fixed,ac_float,ac_channel,ac_complex
@@ -19,7 +21,7 @@ Everything!
 * add math lib porting
 * support eigen
 
-## examples ##
+## Examples : ##
 
 ### ac_bin_string ###
 

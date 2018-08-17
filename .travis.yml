@@ -31,4 +31,4 @@ matrix:
       env: CTEST_TARGET_SYSTEM=MacOS-clang  CTEST_MODEL=Nightly
 
 script:
-  - ctest -VV -S ./CMakeLists.txt
+  - mkdir build && cd build && ctest -VV -S ./CMakeLists.txt
