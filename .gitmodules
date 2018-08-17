@@ -3,4 +3,4 @@
 	url = https://github.com/eigenteam/eigen-git-mirror
 [submodule "cppitertools"]
 	path = cppitertools
-	url = git@github.com:ryanhaining/cppitertools.git
+	url = https://github.com/ryanhaining/cppitertools.git
