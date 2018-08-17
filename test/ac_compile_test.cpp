@@ -1072,7 +1072,11 @@ int main()
     auto t = ac_hex_string{ a };
     cout << t << endl;
     t = "0x01-02 03_04h";
-    cout << hex <<static_cast<ac_int<32,false>>(t) << endl;
+    //ac_int<32, false> in1 = t;
+    //int aaaa = t;
+    ac_int<32, false> in2 = static_cast<ac_int<32, false>>(t);
+    
+    cout << hex <<static_cast<ac_int<32,false>>(t) << endl <<in2 <<endl;
 
     typedef Eigen::Matrix<ac_fixed<16, 1>, 4, 4> Matrix_f16;
     Matrix_f16 mat;
@@ -1080,7 +1084,9 @@ int main()
     cout << mat << endl << mat * mat << endl;
 
     auto t2 = "0110_0000b"_bin;
-    cout << t2 << endl <<ac_int<16, false>{t2} << endl;
+    ac_int<16, false> abbb = t2;
+    cout << t2 << endl << ac_int<16, false>{t2} << endl;
+    cout << t2 << endl << static_cast<ac_int<16, false>>(t2) << endl;
 
     cout << is_ac_basic_type<uint16>::value << endl;
     cout << is_ac_basic_type<uint16_t>::value << endl;

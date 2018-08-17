@@ -103,28 +103,24 @@ public:
         adjust();
     }
 
-    template <typename T>
-    operator T()
+    template <int W, bool S>
+    operator ac_int<W, S>()
     {
-        static_assert(is_ac_basic_type<T>::value, "T must be ac basic types");
-
         adjust();
-        T t;
+        ac_int<W, S> t;
         t.bit_fill_hex(this->c_str());
         return t;
     }
 
-
-    template <typename T>
-    operator const T&()
+    template <int W, int I, bool S, ac_q_mode Q, ac_o_mode O>
+    operator ac_fixed<W, I, S, Q, O>()
     {
-        static_assert(is_ac_basic_type<T>::value, "T must be ac basic types");
-
         adjust();
-        T t;
+        ac_fixed<W, I, S, Q, O> t;
         t.bit_fill_hex(this->c_str());
         return t;
     }
+
 };
 
 
@@ -208,29 +204,28 @@ public:
         adjust();
     }
 
-    template <typename T>
-    operator T()
+    template <int W, bool S>
+    operator ac_int<W, S>()
     {
-        static_assert(is_ac_basic_type<T>::value, "T must be ac basic types");
         adjust();
 
-        std::bitset<T::width> bits{*static_cast<std::basic_string<_Elem, _Traits, _Alloc>*>(this)};
-        T t;
+        std::bitset<ac_int<W, S>::width> bits{ *static_cast<std::basic_string<_Elem, _Traits, _Alloc>*>(this) };
+        ac_int<W, S> t;
         t.set_slc(0, ac_convert::to_ac_int(bits));
         return t;
     }
 
-    template <typename T>
-    operator const T&()
+    template <int W, int I, bool S, ac_q_mode Q, ac_o_mode O>
+    operator ac_fixed<W, I, S, Q, O>()
     {
-        static_assert(is_ac_basic_type<T>::value, "T must be ac basic types");
         adjust();
 
-        std::bitset<T::width> bits{*static_cast<std::basic_string<_Elem, _Traits, _Alloc>*>(this)};
-        T t;
+        std::bitset<ac_fixed<W, I, S, Q, O>::width> bits{ *static_cast<std::basic_string<_Elem, _Traits, _Alloc>*>(this) };
+        ac_fixed<W, I, S, Q, O> t;
         t.set_slc(0, ac_convert::to_ac_int(bits));
         return t;
     }
+
 };
 
 
