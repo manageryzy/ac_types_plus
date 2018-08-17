@@ -1,7 +1,7 @@
 language: cpp
 
 sudo: required
-dist: xenial
+dist: trusty
 
 addons:
   apt:
@@ -39,8 +39,6 @@ matrix:
     #     - MATRIX_EVAL="CC=clang-6.0 &&CXX=clang++-6.0"
 before_install:
   - eval "${MATRIX_EVAL}"
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -q
 script:
   - echo $CC
   - mkdir build && cd build && cmake .. && make -j && ctest
