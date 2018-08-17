@@ -1072,10 +1072,9 @@ int main()
     auto t = ac_hex_string{ a };
     cout << t << endl;
     t = "0x01-02 03_04h";
-    //ac_int<32, false> in1 = t;
-    //int aaaa = t;
+    ac_int<32, false> in1 = t;
     ac_int<32, false> in2 = static_cast<ac_int<32, false>>(t);
-    
+
     cout << hex <<static_cast<ac_int<32,false>>(t) << endl <<in2 <<endl;
 
     typedef Eigen::Matrix<ac_fixed<16, 1>, 4, 4> Matrix_f16;

@@ -22,13 +22,21 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-7
+            - g++-8
       env:
         - CTEST_TARGET_SYSTEM=Linux-gcc    CTEST_MODEL=Nightly
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-    - os: osx
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+    - os: linux
       compiler: clang
-      env: CTEST_TARGET_SYSTEM=MacOS-clang  CTEST_MODEL=Nightly
+      addons:
+        apt:
+            sources:
+              - ubuntu-toolchain-r-test
+            packages:
+              - clang-6
+      env:
+        - CTEST_TARGET_SYSTEM=Linux-clang  CTEST_MODEL=Nightly
+        -  MATRIX_EVAL="CC=clang-6 && CXX=clang++-6"
 
 script:
   - mkdir build && cd build && cmake .. && make -j && ctest
