@@ -9,7 +9,7 @@ struct ac_convert
     {
         Ty_ac convert_ac_val;
         Ty_target convert_target;
-        std::bitset<W> convert_bitset;
+        std::bitset<(size_t)W> convert_bitset;
 
         internal_convert()
             : convert_ac_val(0)
@@ -18,7 +18,7 @@ struct ac_convert
     };
 
     template <int W, bool S>
-    constexpr static std::bitset<W> to_bitset(const ac_int<W, S> &ref)
+    constexpr static std::bitset<(size_t)W> to_bitset(const ac_int<W, S> &ref)
     {
         internal_convert<W, ac_int<W, S>> cov;
         cov.convert_ac_val = ref;
@@ -26,7 +26,7 @@ struct ac_convert
     }
 
     template <int W, bool S>
-    constexpr static void to_bitset(const ac_int<W, S> &ref,std::bitset<W> & output)
+    constexpr static void to_bitset(const ac_int<W, S> &ref,std::bitset<(size_t)W> & output)
     {
         internal_convert<W, ac_int<W, S>> cov;
         cov.convert_ac_val = ref;
@@ -34,7 +34,7 @@ struct ac_convert
     }
 
     template <int W, int I, bool S, ac_q_mode Q, ac_o_mode O>
-    constexpr static std::bitset<W> to_bitset(const ac_fixed<W, I, S, Q, O> &ref)
+    constexpr static std::bitset<(size_t)W> to_bitset(const ac_fixed<W, I, S, Q, O> &ref)
     {
         internal_convert<W, ac_fixed<W, I, S, Q, O>> cov;
         cov.convert_ac_val = ref;
@@ -42,7 +42,7 @@ struct ac_convert
     }
 
     template <int W, int I, bool S, ac_q_mode Q, ac_o_mode O>
-    constexpr static void to_bitset (const ac_fixed<W, I, S, Q, O> &ref, std::bitset<W> & output)
+    constexpr static void to_bitset (const ac_fixed<W, I, S, Q, O> &ref, std::bitset<(size_t)W> & output)
     {
         internal_convert<W, ac_fixed<W, I, S, Q, O>> cov;
         cov.convert_ac_val = ref;
@@ -50,7 +50,7 @@ struct ac_convert
     }
 
     template <int W, int I, int E, ac_q_mode Q>
-    constexpr static std::bitset<W> to_bitset(const ac_float<W, I, E, Q> &ref)
+    constexpr static std::bitset<(size_t)W> to_bitset(const ac_float<W, I, E, Q> &ref)
     {
         internal_convert<W, ac_float<W, I, E, Q>> cov;
         cov.convert_ac_val = ref;
@@ -58,7 +58,7 @@ struct ac_convert
     }
 
     template <int W, int I, int E, ac_q_mode Q>
-    constexpr static void to_bitset (const ac_float<W, I, E, Q> &ref, std::bitset<W> & output)
+    constexpr static void to_bitset (const ac_float<W, I, E, Q> &ref, std::bitset<(size_t)W> & output)
     {
         internal_convert<W, ac_float<W, I, E, Q>> cov;
         cov.convert_ac_val = ref;
@@ -269,55 +269,55 @@ struct ac_convert
         output = to_ac_int<W * 2> (res);
     }
 
-    template <size_t W>
-    constexpr static ac_int<W, false> to_ac_int(const std::bitset<W> &ref)
+    template <int W>
+    constexpr static ac_int<W, false> to_ac_int(const std::bitset<(size_t)W> &ref)
     {
         internal_convert<static_cast<int>(W), ac_int<W, false>> cov;
         cov.convert_bitset = ref;
         return cov.convert_target;
     }
 
-    template <size_t W>
-    constexpr static void to_ac_int(const std::bitset<W> &ref, ac_int<W, false> & output)
+    template <int W>
+    constexpr static void to_ac_int(const std::bitset<(size_t)W> &ref, ac_int<W, false> & output)
     {
         internal_convert<static_cast<int>(W), ac_int<W, false>> cov;
         cov.convert_bitset = ref;
         output = cov.convert_target;
     }
 
-    template <size_t W, int I, bool S, ac_q_mode Q = AC_TRN, ac_o_mode O = AC_WRAP>
-    constexpr static ac_fixed<W, I, S, Q, O> to_ac_fixed(const std::bitset<W> &ref)
+    template <int W, int I, bool S, ac_q_mode Q = AC_TRN, ac_o_mode O = AC_WRAP>
+    constexpr static ac_fixed<W, I, S, Q, O> to_ac_fixed(const std::bitset<(size_t)W> &ref)
     {
         internal_convert<static_cast<int>(W), ac_fixed<W, I, S, Q, O>> cov;
         cov.convert_bitset = ref;
         return cov.convert_target;
     }
 
-    template <size_t W, int I, bool S, ac_q_mode Q, ac_o_mode O>
-    constexpr static void to_ac_fixed (const std::bitset<W> &ref, ac_fixed<W, I, S, Q, O> & output)
+    template <int W, int I, bool S, ac_q_mode Q, ac_o_mode O>
+    constexpr static void to_ac_fixed (const std::bitset<(size_t)W> &ref, ac_fixed<W, I, S, Q, O> & output)
     {
         internal_convert<static_cast<int> (W), ac_fixed<W, I, S, Q, O>> cov;
         cov.convert_bitset = ref;
         output = cov.convert_target;
     }
 
-    template <size_t W, int I, int E, ac_q_mode Q = AC_TRN>
-    constexpr static ac_float<W, I, E, Q> to_ac_float(const std::bitset<W> &ref)
+    template <int W, int I, int E, ac_q_mode Q = AC_TRN>
+    constexpr static ac_float<W, I, E, Q> to_ac_float(const std::bitset<(size_t)W> &ref)
     {
         internal_convert<static_cast<int>(W), ac_float<W, I, E, Q>> cov;
         cov.convert_bitset = ref;
         return cov.convert_target;
     }
 
-    template <size_t W, int I, int E, ac_q_mode Q>
-    constexpr static void to_ac_float (const std::bitset<W> &ref, ac_float<W, I, E, Q> & output)
+    template <int W, int I, int E, ac_q_mode Q>
+    constexpr static void to_ac_float (const std::bitset<(size_t)W> &ref, ac_float<W, I, E, Q> & output)
     {
         internal_convert<static_cast<int> (W), ac_float<W, I, E, Q>> cov;
         cov.convert_bitset = ref;
         output = cov.convert_target;
     }
 
-    template <size_t W, int I, bool S, ac_q_mode Q = AC_TRN, ac_o_mode O = AC_WRAP>
+    template <int W, int I, bool S, ac_q_mode Q = AC_TRN, ac_o_mode O = AC_WRAP>
     constexpr static ac_fixed<W, I, S, Q, O> to_ac_fixed(const ac_int<W, false> &ref)
     {
         internal_convert<static_cast<int>(W), ac_int<W, false>, ac_fixed<W, I, S, Q, O>> cov;
@@ -325,7 +325,7 @@ struct ac_convert
         return cov.convert_target;
     }
 
-    template <size_t W, int I, bool S, ac_q_mode Q , ac_o_mode O>
+    template <int W, int I, bool S, ac_q_mode Q , ac_o_mode O>
     constexpr static void to_ac_fixed (const ac_int<W, false> &ref, ac_fixed<W, I, S, Q, O> & output)
     {
         internal_convert<static_cast<int> (W), ac_int<W, false>, ac_fixed<W, I, S, Q, O>> cov;
@@ -333,7 +333,7 @@ struct ac_convert
         output =  cov.convert_target;
     }
 
-    template <size_t W, int I, int E, ac_q_mode Q = AC_TRN>
+    template <int W, int I, int E, ac_q_mode Q = AC_TRN>
     constexpr static ac_float<W, I, E, Q> to_ac_float(const ac_int<W, false> &ref)
     {
         internal_convert<static_cast<int>(W), ac_int<W, false>, ac_float<W, I, E, Q>> cov;
@@ -341,7 +341,7 @@ struct ac_convert
         return cov.convert_target;
     }
 
-    template <size_t W, int I, int E, ac_q_mode Q>
+    template <int W, int I, int E, ac_q_mode Q>
     constexpr static void to_ac_float (const ac_int<W, false> &ref, ac_float<W, I, E, Q> &output)
     {
         internal_convert<static_cast<int> (W), ac_int<W, false>, ac_float<W, I, E, Q>> cov;
@@ -350,8 +350,8 @@ struct ac_convert
     }
 };
 
-template <size_t W>
-constexpr std::bitset<W * 2> join_bitset(const std::bitset<W> &ref1, const std::bitset<W> &ref2)
+template <int W>
+constexpr std::bitset<(size_t)W * 2> join_bitset(const std::bitset<(size_t)W> &ref1, const std::bitset<(size_t)W> &ref2)
 {
     ac_int<static_cast<int>(W) * 2, false> res;
     res.set_slc(0, ac_convert::to_ac_int(ref2));
