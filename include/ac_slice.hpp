@@ -299,6 +299,7 @@ struct ac_convert
         internal_convert<static_cast<int> (W), ac_fixed<W, I, S, Q, O>> cov;
         cov.convert_bitset = ref;
         output = cov.convert_target;
+        output.fix_signed();
     }
 
     template <int W, int I, int E, ac_q_mode Q = AC_TRN>

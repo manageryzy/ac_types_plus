@@ -421,6 +421,12 @@ public:
   inline Slong to_int64() const { return ((I-W) >= 64) ? 0 : (Slong) to_ac_int(); } 
   inline Ulong to_uint64() const { return ((I-W) >= 64) ? 0 : (Ulong) to_ac_int(); } 
   inline double to_double() const { return ac_private::ldexpr<I-W>(Base::to_double()); } 
+  
+  inline void fix_signed() {
+      auto hi_w = W%32;
+      auto hi_w_r = 32-hi_w;
+      Base::v[N-1] = (Base::v[N-1]<<hi_w_r)>>hi_w_r;
+}
 
   inline int length() const { return W; }
 
