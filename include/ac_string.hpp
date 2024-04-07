@@ -211,7 +211,7 @@ public:
 
         std::bitset<ac_int<W, S>::width> bits{ *static_cast<std::basic_string<_Elem, _Traits, _Alloc>*>(this) };
         ac_int<W, S> t;
-        t.set_slc(0, ac_convert::to_ac_int(bits));
+        t.set_slc(0, ac_convert::to_ac_int<W>(bits));
         return t;
     }
 
@@ -222,7 +222,7 @@ public:
 
         std::bitset<ac_fixed<W, I, S, Q, O>::width> bits{ *static_cast<std::basic_string<_Elem, _Traits, _Alloc>*>(this) };
         ac_fixed<W, I, S, Q, O> t;
-        t.set_slc(0, ac_convert::to_ac_int(bits));
+        t.set_slc(0, ac_convert::to_ac_int<W>(bits));
         return t;
     }
 

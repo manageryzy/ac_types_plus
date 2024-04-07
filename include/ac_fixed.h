@@ -251,6 +251,8 @@ public:
   static const bool compute_overflow_for_wrap = false;
 #endif
 
+  struct is_ac_basic_type : std::true_type {};
+
   template<int W2, int I2, bool S2>
   struct rt {
     enum {
