@@ -2,6 +2,11 @@
 
 #include <type_traits>
 
+#ifdef __AC_NAMESPACE
+namespace __AC_NAMESPACE {
+#endif
+
+
 class ac_base_type
 {
 }; // base class for ac_int ac_fixed ac_channel ac_complex ac_float
@@ -30,3 +35,7 @@ struct is_ac_basic_type :
     >::type
 {
 };
+
+#ifdef __AC_NAMESPACE
+}
+#endif

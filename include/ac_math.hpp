@@ -6,22 +6,22 @@
 template <typename T>\
 inline double NAME(T X) noexcept\
 {\
-    static_assert(is_ac_basic_type<T>::value, "T must be ac basic type");\
+    static_assert(__AC_NAMESPACE::is_ac_basic_type<T>::value, "T must be ac basic type");\
     return NAME(X.to_double());\
 }
 #define MATH_WRAPPER_2(NAME)\
 template <typename T,typename T2>\
 inline double NAME(T X,T2 Y) noexcept\
 {\
-    static_assert(is_ac_basic_type<T>::value, "T must be ac basic type");\
-    return NAME(X.to_double(),Y.to_double);\
+    static_assert(__AC_NAMESPACE::is_ac_basic_type<T>::value, "T must be ac basic type");\
+    return NAME(X.to_double(),Y.to_double());\
 }
 
 #define MATH_WRAPPER_INT(NAME)\
 template <typename T>\
 inline double NAME(T X, int Y) noexcept\
 {\
-    static_assert(is_ac_basic_type<T>::value, "T must be ac basic type");\
+    static_assert(__AC_NAMESPACE::is_ac_basic_type<T>::value, "T must be ac basic type");\
     return NAME(X.to_double(),Y);\
 }
 MATH_WRAPPER(acos);
@@ -79,6 +79,6 @@ MATH_WRAPPER(tgamma);
 MATH_WRAPPER(trunc);
 
 
-#undef  MATH_WRAPPER
+#undef MATH_WRAPPER
 #undef MATH_WRAPPER_2
 #undef MATH_WRAPPER_INT

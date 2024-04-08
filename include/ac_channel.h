@@ -64,6 +64,10 @@
 #define AC_CHAN_CTOR_INIT(varname,init) varname(init)
 #define AC_CHAN_CTOR_VAL(varname,init,val) varname(init,val)
 
+#ifdef __AC_NAMESPACE
+namespace __AC_NAMESPACE {
+#endif
+
 ////////////////////////////////////////////////
 // Struct: ac_exception / ac_channel_exception
 ////////////////////////////////////////////////
@@ -570,4 +574,9 @@ bool nb_read_join(Args&... args) {
 #  undef AC_CHANNEL_ASSERT
 #endif
 
+#endif
+
+
+#ifdef __AC_NAMESPACE
+}
 #endif

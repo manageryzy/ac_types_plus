@@ -2,6 +2,10 @@
 
 #include <bitset>
 
+#ifdef __AC_NAMESPACE
+namespace __AC_NAMESPACE {
+#endif
+
 struct ac_convert
 {
     template <int W, typename Ty_ac, typename Ty_target = Ty_ac>
@@ -360,3 +364,8 @@ constexpr std::bitset<(size_t)W * 2> join_bitset(const std::bitset<(size_t)W> &r
 
     return ac_convert::to_bitset(res);
 }
+
+
+#ifdef __AC_NAMESPACE
+}
+#endif

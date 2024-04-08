@@ -7,19 +7,27 @@
 #pragma GCC diagnostic ignored "-Wsign-compare"
 #pragma GCC diagnostic ignored "-Wshift-count-overflow"
 #pragma GCC diagnostic ignored "-Wreturn-local-addr"
-#endif
+#endif // __GNUC__
 
 #ifdef _MSC_VER
 #pragma warning( push )
 #pragma warning( disable )
+#endif // _MSC_VER
+
+#ifdef __CUDA_ARCH__
+#define CUDA_CALLABLE_MEMBER __host__ __device__
+#else
+#define CUDA_CALLABLE_MEMBER
 #endif
 
+#define __AC_NAMESPACE ac_datatype
 
 #include "ac_data_plus.hpp"
 
 #include "ac_int.h"
 #include "ac_fixed.h"
 #include "ac_float.h"
+#include "ac_std_float.h"
 #include "ac_complex.h"
 #include "ac_channel.h"
 
@@ -27,6 +35,8 @@
 
 #include "ac_slice.hpp"
 #include "ac_string.hpp"
+
+#undef __AC_NAMESPACE
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop

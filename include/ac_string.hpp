@@ -4,6 +4,11 @@
 #include <iostream>
 #include <bitset>
 
+
+#ifdef __AC_NAMESPACE
+namespace __AC_NAMESPACE {
+#endif
+
 template <class _Elem,
           class _Traits = std::char_traits<_Elem>,
           class _Alloc = std::allocator<_Elem>>
@@ -275,3 +280,7 @@ using ac_bin_u32string = ac_bin_basic_string<char32_t, std::char_traits<char32_t
     return ac_bin_u32string(str, len);
 }
 
+
+#ifdef __AC_NAMESPACE
+}
+#endif
