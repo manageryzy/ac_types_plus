@@ -164,12 +164,14 @@ namespace __AC_NAMESPACE {
 #ifndef __SYNTHESIS__
 #ifndef AC_USER_DEFINED_ASSERT
       if (!condition) {
+#ifndef __CUDA_ARCH__
         std::cerr << "Assert";
         if (file)
           std::cerr << " in file " << file << ":" << line;
         if (msg)
           std::cerr << " " << msg;
         std::cerr << std::endl;
+#endif
         assert(0);
       }
 #else
@@ -1081,7 +1083,7 @@ namespace __AC_NAMESPACE {
     }
 
     template<int N, int Nr, bool S>
-    inline void iv_shift_l2(const int* op1, signed op2, int* r) {
+    CUDA_CALLABLE_MEMBER inline void iv_shift_l2(const int* op1, signed op2, int* r) {
       if (S && op2 < 0)
         iv_shift_r<N, Nr>(op1, -op2, r);
       else
@@ -1406,7 +1408,7 @@ namespace __AC_NAMESPACE {
       return r;
     }
 
-    inline Slong set_bits_int64(Slong op, int lsb, int WS, Slong slc) {
+    CUDA_CALLABLE_MEMBER inline Slong set_bits_int64(Slong op, int lsb, int WS, Slong slc) {
       // WS < 64, lsb+WS-1 < 64
       // set the bits [pos+WS-1,pos] of op with the lower WS bits of slc
       Ulong mask = ~(all_ones64 << WS);
