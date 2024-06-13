@@ -17,7 +17,6 @@
 #ifdef __CUDA_ARCH__
 #define CUDA_CALLABLE_MEMBER __host__ __device__
 #define CUDA_FORCE_INLINE __forceinline__
-#define
 #else
 #define CUDA_CALLABLE_MEMBER
 #define CUDA_FORCE_INLINE
