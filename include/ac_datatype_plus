@@ -16,8 +16,37 @@
 
 #ifdef __CUDA_ARCH__
 #define CUDA_CALLABLE_MEMBER __host__ __device__
+#define CUDA_FORCE_INLINE __forceinline__
+#define
 #else
 #define CUDA_CALLABLE_MEMBER
+#define CUDA_FORCE_INLINE
+#endif
+
+#ifdef __NVCC__
+#pragma nv_diagnostic push
+#ifdef __NVCC_DIAG_PRAGMA_SUPPORT__
+#pragma nv_diag_suppress 11   // unrecognized preprocessing directive
+#pragma nv_diag_suppress 177  // declared but never referenced
+#pragma nv_diag_suppress 549  // allowing return undefined value
+#pragma nv_diag_suppress 541  // allowing all exceptions is incompatible with
+                              // previous function
+#pragma nv_diag_suppress 1758 // conversion between incompatible vector types
+#pragma nv_diag_suppress 20040 // __host__ function "ac_int" cannot be called from
+                               // __device__ function
+
+#pragma nv_diag_suppress integer_sign_change
+#pragma nv_diag_suppress 68
+#else
+#pragma diag_suppress 11
+#pragma diag_suppress 177
+#pragma diag_suppress 541
+#pragma diag_suppress 549
+#pragma diag_suppress 1758
+#pragma diag_suppress 20040
+#pragma diag_suppress integer_sign_change
+#pragma diag_suppress 68
+#endif
 #endif
 
 #define __AC_NAMESPACE ac_datatype
@@ -44,4 +73,8 @@
 
 #ifdef _MSC_VER
 #pragma warning( pop )
+#endif
+
+#ifdef __NVCC__
+#pragma nv_diagnostic pop
 #endif

@@ -859,11 +859,11 @@ namespace __AC_NAMESPACE {
       r += ">";
       return r;
     }
-    CUDA_CALLABLE_MEMBER void extract(mu_t& m, e_t& e, bool& sign, bool& normal, bool& zero, bool& inf, bool& nan, bool biased_exp = false, bool no_subnormals = false) const {
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE void extract(mu_t& m, e_t& e, bool& sign, bool& normal, bool& zero, bool& inf, bool& nan, bool biased_exp = false, bool no_subnormals = false) const {
       e = d.template slc<E>(mant_bits);
       bool exception = e == -1;
       normal = !!e | no_subnormals;
-      m = d;
+      m = d.template slc<mant_bits>(0);
       bool m_zero = !m.template slc<mant_bits>(0);
       zero = (!e) & (no_subnormals | m_zero);
       m[mant_bits] = !!e;

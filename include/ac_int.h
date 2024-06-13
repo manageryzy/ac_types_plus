@@ -160,7 +160,7 @@ namespace __AC_NAMESPACE {
     CUDA_CALLABLE_MEMBER inline double mgc_floor(double d) { return floor(d); }
 
 #define AC_ASSERT(cond, msg) ac_private::ac_assert(cond, __FILE__, __LINE__, msg)
-    CUDA_CALLABLE_MEMBER inline void ac_assert(bool condition, const char* file = 0, int line = 0, const char* msg = 0) {
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline void ac_assert(bool condition, const char* file = 0, int line = 0, const char* msg = 0) {
 #ifndef __SYNTHESIS__
 #ifndef AC_USER_DEFINED_ASSERT
       if (!condition) {
@@ -1430,7 +1430,7 @@ namespace __AC_NAMESPACE {
       int v[N];
     public:
       template<int N2> friend class iv;
-      CUDA_CALLABLE_MEMBER iv() {}
+      CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE iv() {}
       template<int N2>
       CUDA_CALLABLE_MEMBER iv(const iv<N2>& b) {
         const int M = AC_MIN(N, N2);
@@ -1641,8 +1641,8 @@ namespace __AC_NAMESPACE {
     template<int N, bool S, bool C>
     class iv_conv : public iv<N> {
     protected:
-      CUDA_CALLABLE_MEMBER iv_conv() {}
-      template<class T> CUDA_CALLABLE_MEMBER iv_conv(const T& t) : iv<N>(t) {}
+      CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE iv_conv() {}
+      template<class T> CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE iv_conv(const T& t) : iv<N>(t) {}
     };
 
     template<int N>
@@ -1650,8 +1650,8 @@ namespace __AC_NAMESPACE {
     public:
       CUDA_CALLABLE_MEMBER operator Ulong () const { return iv<N>::to_uint64(); }
     protected:
-      CUDA_CALLABLE_MEMBER iv_conv() {}
-      template<class T> CUDA_CALLABLE_MEMBER iv_conv(const T& t) : iv<N>(t) {}
+      CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE iv_conv() {}
+      template<class T> CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE iv_conv(const T& t) : iv<N>(t) {}
     };
 
     template<int N>
@@ -1659,8 +1659,8 @@ namespace __AC_NAMESPACE {
     public:
       CUDA_CALLABLE_MEMBER operator Slong () const { return iv<N>::to_int64(); }
     protected:
-      CUDA_CALLABLE_MEMBER iv_conv() {}
-      template<class T> CUDA_CALLABLE_MEMBER iv_conv(const T& t) : iv<N>(t) {}
+      CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE iv_conv() {}
+      template<class T> CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE iv_conv(const T& t) : iv<N>(t) {}
     };
 
     // Set default to promote to int as this is the case for almost all types
@@ -2095,30 +2095,30 @@ namespace __AC_NAMESPACE {
 
     template<int W2, bool S2> friend class ac_int;
     template<int W2, int I2, bool S2, ac_q_mode Q2, ac_o_mode O2> friend class ac_fixed;
-    CUDA_CALLABLE_MEMBER ac_int() {
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE ac_int() {
 #if !defined(__SYNTHESIS__) && defined(AC_DEFAULT_IN_RANGE)
       bit_adjust();
 #endif
     }
     template<int W2, bool S2>
-    CUDA_CALLABLE_MEMBER inline ac_int(const ac_int<W2, S2>& op) {
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(const ac_int<W2, S2>& op) {
       Base::operator =(op);
       bit_adjust();
     }
 
-    CUDA_CALLABLE_MEMBER inline ac_int(bool b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(char b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(signed char b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(unsigned char b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(signed short b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(unsigned short b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(signed int b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(unsigned int b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(signed long b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(unsigned long b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(Slong b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(Ulong b) : ConvBase(b) { bit_adjust(); }
-    CUDA_CALLABLE_MEMBER inline ac_int(double d) : ConvBase(d) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(bool b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(char b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(signed char b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(unsigned char b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(signed short b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(unsigned short b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(signed int b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(unsigned int b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(signed long b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(unsigned long b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(Slong b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(Ulong b) : ConvBase(b) { bit_adjust(); }
+    CUDA_CALLABLE_MEMBER CUDA_FORCE_INLINE inline ac_int(double d) : ConvBase(d) { bit_adjust(); }
 
 
 #if (defined(_MSC_VER) && !defined(__EDG__))
